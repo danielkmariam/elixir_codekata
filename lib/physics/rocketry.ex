@@ -14,7 +14,8 @@ defmodule Physics.Rocketry do
   end
 
   defp calculate_escape(%{mass: mass, radius: radius}) do
-    :math.sqrt 2 * Laws.gravitational_constant * mass / radius
+    2 * Laws.gravitational_constant * mass / radius
+      |> :math.sqrt
   end
 
 end
