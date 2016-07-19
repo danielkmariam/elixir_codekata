@@ -6,6 +6,6 @@ defmodule PhysicsCalculateTest do
   end
 
   test "change velocity to nearest tenth" do
-    assert Calculate.to_nearest_tenth(19.88322) == 19.9
+    assert Calculate.to_nearest_tenth(19.88322) == 19.89
   end
 end

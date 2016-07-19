@@ -5,7 +5,6 @@ defmodule Physics.Rocketry do
     Planet.earth |> escape_velocity
   end
 
-  #Float.ceil((:math.sqrt(2 * 6.67e-11 * mass / radius) / 1000), 2)
   def escape_velocity(planet) when is_map(planet) do
     planet
       |> calculate_escape
@@ -13,9 +12,24 @@ defmodule Physics.Rocketry do
       |> Calculate.to_nearest_tenth
   end
 
+  def orbital_acceleration(planet, height) when is_map(planet) do
+    (orbital_speed(planet, height) |> Calculate.squared) / orbital_radius(planet, height)
+      |> Calculate.to_nearest_tenth
+  end
+
+  def orbital_speed(planet, height) when is_map(planet) do
+    Laws.gravitational_constant * planet.mass / orbital_radius(planet, height)
+      |> Calculate.square_root
+      |> Calculate.to_nearest_tenth
+  end
+
   defp calculate_escape(%{mass: mass, radius: radius}) do
     2 * Laws.gravitational_constant * mass / radius
-      |> :math.sqrt
+      |> Calculate.square_root
+  end
+
+  defp orbital_radius(%{radius: radius}, height) do
+    radius + (height |> Calculate.to_meter)
   end
 
 end
